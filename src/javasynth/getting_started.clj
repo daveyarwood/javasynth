@@ -10,6 +10,7 @@
     (.add synth out)
     (.add synth sine)
     (.connect (. sine -output) (. out -input))
-    (.start out)
-    (Thread/sleep dur)
-    (.stop synth)))
+    (let [now (. synth getCurrentTime)]
+      (.start out)
+      (. synth (sleepUntil (+ now (/ dur 1000))))
+      (.stop synth))))
